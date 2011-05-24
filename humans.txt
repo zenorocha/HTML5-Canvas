@@ -1,0 +1,25 @@
+humanstxt.org - espalhe você também essa idéia =D
+
+/* DEVELOPED BY */
+
+	Name: Zeno Rocha
+	Site: http://zenorocha.com
+	Twitter: http://twitter.com/zenorocha
+
+/* INSPIRED ON */
+
+	Name: Jeffrey Way
+	Site: http://jeffrey-way.com
+	
+	Name: Remy Sharp
+	Site: http://remysharp.com
+
+	Name: HTML5 Logo
+	Site: http://www.w3.org/html/logo
+
+/* TECHNOLOGIES */
+  
+	Standards: HTML5, CSS3
+	Components: Modernizr, jQuery
+	Template: HTML5 Boilerplate	
+	Software: Aptana Studio 3
