@@ -211,7 +211,6 @@ header a:hover {
 	height: 334px;
 	margin:0 0 10px;
 	width:495px;
-	background: url(../img/html5-banner.jpg);
 }
 
 /* --- Caixa Esquerda #2 --- */
@@ -286,7 +285,7 @@ footer a:hover {
 .autor {
 	margin:15px;
 	padding-top: 20px;
-	font-size: 28px;
+	font-size: 22px;
 	color: #fff;
 }
 
