@@ -2,24 +2,22 @@ humanstxt.org - espalhe você também essa idéia =D
 
 /* DEVELOPED BY */
 
-	Name: Zeno Rocha
-	Site: http://zenorocha.com
-	Twitter: http://twitter.com/zenorocha
+  Name: Zeno Rocha
+  Site: http://zenorocha.com
+  Twitter: http://twitter.com/zenorocha
+  
+  Name: Zanoni Miranda
+  Site: -
+  Twitter: -
 
-/* INSPIRED ON */
+/* INSPIRED BY */
 
-	Name: Jeffrey Way
-	Site: http://jeffrey-way.com
-	
-	Name: Remy Sharp
-	Site: http://remysharp.com
-
-	Name: HTML5 Logo
-	Site: http://www.w3.org/html/logo
+  Name: Mr. Doob
+  Site: http://mrdoob.com/
 
 /* TECHNOLOGIES */
   
-	Standards: HTML5, CSS3
-	Components: Modernizr, jQuery
-	Template: HTML5 Boilerplate	
-	Software: Aptana Studio 3
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery, Three.js
+  Template: HTML5 Boilerplate 
+  Software: Aptana Studio 3
