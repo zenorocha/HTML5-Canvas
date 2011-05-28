@@ -1,0 +1,8 @@
+#canvas-container {
+  float:left;
+  height: 334px;
+  margin:0 0 10px;
+  width:495px;
+  cursor: auto;
+  background: url(../img/polyfill.png);
+}
