@@ -206,11 +206,12 @@ header a:hover {
 
 /* --- Caixa Direita #1 --- */
 
-#html5-banner {
+#canvas-container {
 	float:left;
 	height: 334px;
 	margin:0 0 10px;
 	width:495px;
+	cursor: move;
 }
 
 /* --- Caixa Esquerda #2 --- */
@@ -285,7 +286,7 @@ footer a:hover {
 .autor {
 	margin:15px;
 	padding-top: 20px;
-	font-size: 22px;
+	font-size: 18px;
 	color: #fff;
 }
 

@@ -2,10 +2,10 @@
 
 <!-- 
    
-   HTML5 Tutorial Template 
+   HTML5 Canvas Tutorial 
 
-   Developed by Zeno Rocha - http://zenorocha.com 
-   Fork me on Github - https://github.com/zenorocha/HTML5-Tutorial-Template
+   Developed by Zeno Rocha and Zanoni Miranda 
+   Fork me on Github - https://github.com/zenorocha/HTML5-Canvas
    
 -->
 
@@ -16,10 +16,10 @@
 <head>
   <meta charset="utf-8">
 
-  <title>HTML5 WebGL</title>
+  <title>HTML5 Canvas</title>
   
   <meta name="author" content="Zeno Rocha">
-  <meta name="description" content="Tutorial sobre HTML5 WebGL">
+  <meta name="description" content="Tutorial sobre HTML5 Canvas">
   
   <link rel="author" href="humans.txt" />
 
@@ -32,7 +32,7 @@
 
 <div id="wrapper">
     <header>
-		<h1>3d experiment</h1>
+		<h1>3d cube experiment</h1>
 		<a id="voltar" href="#">voltar ao tutorial</a>
     </header>
     
@@ -42,7 +42,7 @@
 	    	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel lectus vitae enim tristique scelerisque et ut quam. Vivamus orci lorem, suscipit vitae rhoncus ornare, ultricies sodales velit. Aenean tempor dolor eget augue mollis a euismod sapien congue. Duis eget orci quis massa posuere rutrum mollis vel leo. In hac habitasse platea dictumst. In dictum quam ac velit pellentesque pulvinar. Ut eget sodales lacus. Maecenas nec eleifend libero. Donec elit dui, interdum a aliquet nec, facilisis et nisl. In pulvinar, ipsum at ultricies volutpat, tortor odio iaculis odio, nec congue metus nisi dictum ante. Ut sodales venenatis erat, at ullamcorper leo accumsan vitae. Donec risus sem, iaculis gravida tempor nec, tempus vitae dolor. Nam viverra nulla vel eros facilisis imperdiet. Nam at diam ut lacus ullamcorper dictum. Vestibulum elementum rhoncus nisi, sit amet pulvinar eros cursus sed.</p>
 	    </article>
 	    
-	    <aside id="html5-banner"></aside>
+	    <aside id="canvas-container"></aside>
 	    
 	</section>
 	
@@ -51,7 +51,7 @@
 	    <section id="categoria"></section>
 	    
 	    <section id="descricao">
-	    	<h3>WebGL</h3>
+	    	<h3>Canvas</h3>
 	    	<p>Vestibulum porttitor diam sed velit ultricies cursus. Aliquam purus nunc, posuere non porta vel, ornare at tellus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec facilisis auctor libero vitae rutrum. Curabitur aliquet tempor risus convallis rutrum. Duis vehicula convallis mauris a sollicitudin. In in faucibus est. Aliquam pellentesque sagittis eleifend. Praesent molestie nunc non odio laoreet nec scelerisque velit consequat.</p>
 	    </section>
 	    
@@ -64,9 +64,8 @@
 		<p class="autor">Criado por <a href="http://zenorocha.com/">Zeno Rocha</a> e <a href="#">Zanoni Miranda</a></p>
 		<p class="referencia">Inspirado por <a href="http://mrdoob.com/">Mr. Doob</a></p>
 
-		<!-- Gerar badge em: http://www.w3.org/html/logo -->
 		<div id="html5-badge">
-			<img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics-storage.png" width="197" height="64" alt="HTML5 Powered with CSS3 / Styling, Semantics, and Offline &amp; Storage" title="HTML5 Powered with CSS3 / Styling, Semantics, and Offline &amp; Storage">
+  		  <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-graphics-semantics.png" width="197" height="64" alt="HTML5 Powered with CSS3 / Styling, Graphics, 3D &amp; Effects, and Semantics" title="HTML5 Powered with CSS3 / Styling, Graphics, 3D &amp; Effects, and Semantics">
 		</div>
 		
     </footer>
@@ -85,169 +84,20 @@
     <script>DD_belatedPNG.fix("img, .png_bg");</script>
   <![endif]-->
   
-  
-	<script type="text/javascript" src="build/Three.js"></script>
-
-	<script type="text/javascript" src="js/RequestAnimationFrame.js"></script>
-	<script type="text/javascript" src="js/Stats.js"></script>
-
-	<script type="text/javascript">
-
-		var container;
-
-		var camera, scene, renderer;
-
-		var cube, plane;
-
-		var targetRotation = 0;
-		var targetRotationOnMouseDown = 0;
-
-		var mouseX = 0;
-		var mouseXOnMouseDown = 0;
-
-		var canvasWidth = 495;
-		var canvasHeight = 334;
-		
-		var rotx=0;
-		var windowHalfX = window.innerWidth / 2;
-		var windowHalfY = window.innerHeight / 2;
-
-		init();
-		animate();
-
-		function init() {
-
-			var local = document.getElementById("html5-banner");
-			container = document.createElement('div');
-			
-			local.appendChild( container );
-
-			camera = new THREE.Camera( 70, canvasWidth / canvasHeight, 1, 1000 );
-			camera.position.y = 150;
-			camera.position.z = 500;
-			camera.target.position.y = 150;
-
-			scene = new THREE.Scene();
-			
-			var arrayCor = new Array();
-			arrayCor = [0xF14A29, 0xF14A29, 0xd9d9d9, 0xd9d9d9, 0x0092BF, 0x0092BF];
-			
-			// Cube
-
-			var materials = [];
-
-				for ( var i = 0; i < 6; i ++ ) {
-
-					materials.push( [ new THREE.MeshBasicMaterial( { color: arrayCor[i] } ) ] );
-
-				}
-
-				cube = new THREE.Mesh( new THREE.Cube( 250, 250, 250, 1, 1, 1, materials ), new THREE.MeshFaceMaterial() );
-				cube.position.y = 150;
-				cube.overdraw = true;
-				scene.addObject( cube );
-
-				// Plane
-
-				plane = new THREE.Mesh( new THREE.Plane( 350, 350 ), new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
-				plane.rotation.x = - 90 * ( Math.PI / 180 );
-				plane.overdraw = true;
-				//scene.addObject( plane );
-
-				renderer = new THREE.CanvasRenderer();
-				renderer.setSize(canvasWidth, canvasHeight);
-
-				container.appendChild( renderer.domElement );
-
-				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-			}
-
-			//
-
-			function onDocumentMouseDown( event ) {
-
-				event.preventDefault();
-
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-				document.addEventListener( 'mouseout', onDocumentMouseOut, false );
-
-				mouseXOnMouseDown = event.clientX - windowHalfX;
-				mouseYOnMouseDown = event.clientY - windowHalfY;
-				targetRotationOnMouseDown = targetRotation;
-			}
-
-			function onDocumentMouseMove( event ) {
-
-				mouseX = event.clientX - windowHalfX;
-				mouseY = event.clientY - windowHalfY;
-				targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
-				rotx+= ( mouseY - mouseYOnMouseDown ) * 0.02;
-			}
-
-			function onDocumentMouseUp( event ) {
-
-				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
-			}
-
-			function onDocumentMouseOut( event ) {
-
-				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
-			}
-
-			function onDocumentTouchStart( event ) {
-
-				if ( event.touches.length == 1 ) {
-
-					event.preventDefault();
-
-					mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
-					targetRotationOnMouseDown = targetRotation;
-
-				}
-			}
-
-			function onDocumentTouchMove( event ) {
-
-				if ( event.touches.length == 1 ) {
-
-					event.preventDefault();
-
-					mouseX = event.touches[ 0 ].pageX - windowHalfX;
-					targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.05;
-
-				}
-			}
-
-			//
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-
-				render();
-
-			}
-
-			function render() {
-				rotx*=0.95;
-				plane.rotation.z = cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
-				cube.rotation.x += ( rotx) * 0.001;
-				renderer.render( scene, camera );
-
-			}
-
-		</script>
-  
+	<script type="text/javascript" src="js/yepnope.1.0.1-min.js"></script>
+	
+	<script>
+	  
+	  yepnope({
+      test: Modernizr.canvas,
+      yep: ['build/Three.js', 'js/RequestAnimationFrame.js', 'js/Stats.js', 'js/webgl.js'],
+      nope: 'css/webgl-polyfill.css'
+    });
+    
+  </script>
 
   <script>
-    var _gaq=[["_setAccount","UA-4114546-18"],["_trackPageview"]]; // Change UA-XXXXX-X to be your site's ID 
+    var _gaq=[["_setAccount","UA-4114546-18"],["_trackPageview"]];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
     g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
     s.parentNode.insertBefore(g,s)}(document,"script"));
