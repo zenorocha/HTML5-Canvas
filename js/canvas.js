@@ -1,150 +1,135 @@
+// https://github.com/mrdoob/three.js/wiki/API-Reference
+// http://www.aerotwist.com/lab/getting-started-with-three-js/
+// https://github.com/mrdoob/three.js/
 
-    var container;
+    var camera, cena, renderer, cubo;
 
-    var camera, scene, renderer;
+// alvo da rotação no eixo X e Y 
+    var targetRotationX = 0;
+    var targetRotationY = 0;
 
-    var cube, plane;
-
-    var targetRotation = 0;
-    var targetRotationOnMouseDown = 0;
+// alvo da rotação no eixo X e Y quando o mouse estiver pressionado
+    var targetRotationOnMouseDownX = 0;
+    var targetRotationOnMouseDownY = 0;
 
     var mouseX = 0;
+    var mouseY = 0;
+
     var mouseXOnMouseDown = 0;
+    var mouseYOnMouseDown = 0;
 
     var canvasWidth = 495;
     var canvasHeight = 334;
     
-    var rotx=0;
-    var windowHalfX = window.innerWidth / 2;
-    var windowHalfY = window.innerHeight / 2;
+    var canvasHalfX = canvasWidth / 2;
+    var canvasHalfY = canvasHeight / 2;
 
     init();
     animate();
 
     function init() {
 
-      var local = document.getElementById("canvas-container");
-      container = document.createElement('div');
-      
-      local.appendChild( container );
+      var container = document.getElementById("canvas-container");
 
-      camera = new THREE.Camera( 70, canvasWidth / canvasHeight, 1, 1000 );
+	// Construtor: ( fov <Number>, aspect <Number>, near <Number>, far <Number>, target <THREE.Object3D> )
+
+	// field of vision (view) - quanto menor mais ampliada
+	// aspecto - proporção entre a altura e largura
+	// near - distancia minima para renderizar um objeto
+	// far - distancia maxima para renderizar um objeto
+
+      camera = new THREE.Camera(70, canvasWidth / canvasHeight, 1, 1000);
       camera.position.y = 150;
       camera.position.z = 500;
       camera.target.position.y = 150;
 
-      scene = new THREE.Scene();
-      
+      cena = new THREE.Scene();
+
+	// define as cores das faces - ver qual face é cada cor
       var arrayCor = new Array();
       arrayCor = [0x0092BF, 0x0092BF, 0xd9d9d9, 0xd9d9d9, 0xF14A29, 0xF14A29];
       
-      // Cube
-
       var materials = [];
 
+	// define cada uma das cores para cada uma das faces
         for ( var i = 0; i < 6; i ++ ) {
 
-          materials.push( [ new THREE.MeshBasicMaterial( { color: arrayCor[i] } ) ] );
+          materials.push( [ new THREE.MeshLambertMaterial( { color: arrayCor[i] } ) ] );
 
         }
 
-        cube = new THREE.Mesh( new THREE.Cube( 250, 250, 250, 1, 1, 1, materials ), new THREE.MeshFaceMaterial() );
-        cube.position.y = 150;
-        cube.overdraw = true;
-        scene.addObject( cube );
+	// cria o cubo e seta os materiais relativos a ele
 
-        // Plane
+	// mesh é um grafo tridimensional
 
-        plane = new THREE.Mesh( new THREE.Plane( 350, 350 ), new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
-        plane.rotation.x = - 90 * ( Math.PI / 180 );
-        plane.overdraw = true;
-        //scene.addObject( plane );
+		var abc = new THREE.Cube(250, 250, 250, 1, 1, 1, materials);
 
+        cubo = new THREE.Mesh(abc, new THREE.MeshFaceMaterial() );
+        cubo.position.y = 150;
+        //cubo.overdraw = true;
+        cena.addObject(cubo);
+
+	// cria o renderizador
         renderer = new THREE.CanvasRenderer();
+	// seta o tamanho
         renderer.setSize(canvasWidth, canvasHeight);
-
+	// coloca o renderizador dentro do container criado
         container.appendChild( renderer.domElement );
 
-        document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-        document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-        document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+	// adiciono os eventos
+        document.addEventListener('mousedown', onMouseDown, false);
       }
 
-      //
-
-      function onDocumentMouseDown( event ) {
+      function onMouseDown(event) {
 
         event.preventDefault();
 
-        document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-        document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-        document.addEventListener( 'mouseout', onDocumentMouseOut, false );
+	// adiciona os eventos 
+        document.addEventListener('mousemove', onMouseMove, false);
+        document.addEventListener('mouseup', onMouseUp, false);
+        document.addEventListener('mouseout', onMouseOut, false);
 
-        mouseXOnMouseDown = event.clientX - windowHalfX;
-        mouseYOnMouseDown = event.clientY - windowHalfY;
-        targetRotationOnMouseDown = targetRotation;
+	// posicao do mouse no eixo X e Y quando o mouse estiver clicado
+        mouseXOnMouseDown = event.clientX - canvasHalfX;
+        mouseYOnMouseDown = event.clientY - canvasHalfY;
+        targetRotationOnMouseDownX = targetRotationX;
+        targetRotationOnMouseDownY = targetRotationY;
       }
 
-      function onDocumentMouseMove( event ) {
+      function onMouseMove(event) {
 
-        mouseX = event.clientX - windowHalfX;
-        mouseY = event.clientY - windowHalfY;
-        targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
-        rotx+= ( mouseY - mouseYOnMouseDown ) * 0.02;
+	// posicao do mouse no eixo X e Y quando o mouse estiver movendo
+        mouseX = event.clientX - canvasHalfX;
+        mouseY = event.clientY - canvasHalfY;
+        targetRotationX = targetRotationOnMouseDownX + (mouseX - mouseXOnMouseDown) * 0.02;
+		targetRotationY = targetRotationOnMouseDownY + (mouseY - mouseYOnMouseDown) * 0.02;
       }
 
-      function onDocumentMouseUp( event ) {
+      function onMouseUp(event) {
 
-        document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
-        document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-        document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+	// removendo os eventos quando o mouse nao estiver clicado
+        document.removeEventListener('mousemove', onMouseMove, false);
+        document.removeEventListener('mouseup', onMouseUp, false);
+        document.removeEventListener('mouseout', onMouseOut, false);
       }
 
-      function onDocumentMouseOut( event ) {
+      function onMouseOut(event) {
 
-        document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
-        document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-        document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
-      }
-
-      function onDocumentTouchStart( event ) {
-
-        if ( event.touches.length == 1 ) {
-
-          event.preventDefault();
-
-          mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
-          targetRotationOnMouseDown = targetRotation;
-
-        }
-      }
-
-      function onDocumentTouchMove( event ) {
-
-        if ( event.touches.length == 1 ) {
-
-          event.preventDefault();
-
-          mouseX = event.touches[ 0 ].pageX - windowHalfX;
-          targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.05;
-
-        }
+	// removendo os eventos quando o mouse deixar a tela
+        document.removeEventListener('mousemove', onMouseMove, false);
+        document.removeEventListener('mouseup', onMouseUp, false);
+        document.removeEventListener('mouseout', onMouseOut, false);
       }
 
       //
 
       function animate() {
-
-        requestAnimationFrame( animate );
-
+        requestAnimationFrame(animate);
         render();
-
       }
 
       function render() {
-        rotx*=0.95;
-        plane.rotation.z = cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
-        cube.rotation.x += ( rotx) * 0.001;
-        renderer.render( scene, camera );
-
+		cubo.rotation.y += (targetRotationX - cubo.rotation.y) * 0.05;
+		cubo.rotation.x += (targetRotationY - cubo.rotation.x) * 0.05;
+        renderer.render(cena, camera);
       }
