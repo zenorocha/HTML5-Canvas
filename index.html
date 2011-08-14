@@ -40,7 +40,11 @@
     <section id="tutorial">
 	    
 	    <article id="demo">
-	    	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel lectus vitae enim tristique scelerisque et ut quam. Vivamus orci lorem, suscipit vitae rhoncus ornare, ultricies sodales velit. Aenean tempor dolor eget augue mollis a euismod sapien congue. Duis eget orci quis massa posuere rutrum mollis vel leo. In hac habitasse platea dictumst. In dictum quam ac velit pellentesque pulvinar. Ut eget sodales lacus. Maecenas nec eleifend libero. Donec elit dui, interdum a aliquet nec, facilisis et nisl. In pulvinar, ipsum at ultricies volutpat, tortor odio iaculis odio, nec congue metus nisi dictum ante. Ut sodales venenatis erat, at ullamcorper leo accumsan vitae. Donec risus sem, iaculis gravida tempor nec, tempus vitae dolor. Nam viverra nulla vel eros facilisis imperdiet. Nam at diam ut lacus ullamcorper dictum. Vestibulum elementum rhoncus nisi, sit amet pulvinar eros cursus sed.</p>
+	    	<p>Um experimento utilizando a nova tag &lt;canvas&gt; do HTML5 com o auxílio da poderosa engine Three.js aplicado a um objeto cúbico de três dimensões.</p>
+		<p>Clique ao lado e arraste.</p>
+	    	<h3>Three . js</h3>
+		<p>Com essa engine você consegue criar facilmente câmeras, objetos, materiais, cenas de iluminação e muito mais.</p>
+		<p>Isso tudo podendo escolher se a cena será desenhada em Canvas, WebGL ou SVG.</p>
 	    </article>
 	    
 	    <aside id="canvas-container"></aside>
@@ -53,7 +57,7 @@
 	    
 	    <section id="descricao">
 	    	<h3>Canvas</h3>
-	    	<p>Vestibulum porttitor diam sed velit ultricies cursus. Aliquam purus nunc, posuere non porta vel, ornare at tellus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec facilisis auctor libero vitae rutrum. Curabitur aliquet tempor risus convallis rutrum. Duis vehicula convallis mauris a sollicitudin. In in faucibus est. Aliquam pellentesque sagittis eleifend. Praesent molestie nunc non odio laoreet nec scelerisque velit consequat.</p>
+	    	<p>Com ele você pode renderizar imagens, desenhar elementos complexos e criar animações. Isso tudo sem utilizar qualquer plugin proprietário no seu navegador como Flash Player ou Silverlight, é só HTML e Javascript. Simplesmente um divisor de águas no desenvolvimento de experiências ricas utilizando o navegador.</p>
 	    </section>
 	    
   	</section>
@@ -90,12 +94,12 @@
 	<script>
 	  
 	  yepnope({
-	      test: Modernizr.canvas,
-	      yep: ['build/Three.js', 'js/RequestAnimationFrame.js', 'js/canvas.js'],
-	      nope: 'css/canvas-polyfill.css'
-	  });
+      test: Modernizr.canvas,
+      yep: ['build/Three.js', 'js/RequestAnimationFrame.js', 'js/canvas.js'],
+      nope: 'css/canvas-polyfill.css'
+    });
     
-	</script>
+  </script>
 
   <script>
     var _gaq=[["_setAccount","UA-4114546-18"],["_trackPageview"]];
