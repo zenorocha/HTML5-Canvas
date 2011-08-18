@@ -180,6 +180,24 @@ header a:hover {
 	margin:0 10px 10px 0;
 	width:495px;
 	height:334px;
+	background: none;
+}
+
+#introduction {
+	height:130px;
+	background: #fff;
+	margin: 0 0 10px 0;
+	padding: 10px 0 0;
+}
+
+#introduction p {
+	margin: 10px 15px 20px;
+}
+
+#three {
+	height:184px;
+	background: #fff;
+	margin: 0;
 }
 
 /* --- Conteúdo - Caixa Esquerda #1 --- */
